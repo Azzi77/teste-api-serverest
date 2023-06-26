@@ -20,9 +20,6 @@ Esse repositório foi criado para fins de estudos.
 
 
 
-## License
-https://github.com/Azzi77/sprint6-tr
-
 ## Créditos
 - William Alves da Silva
 - API Serverest https://serverest.dev/
