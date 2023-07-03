@@ -27,6 +27,17 @@
 			"name": "Login com sucesso",
 			"event": [
 				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
 					"listen": "prerequest",
 					"script": {
 						"exec": [
@@ -80,6 +91,28 @@
 							"pm.test(\"Status code is 201\", function () {\r",
 							"    pm.response.to.have.status(201);\r",
 							"});\r",
+							"\r",
+							"let response = pm.response.json();\r",
+							"pm.environment.set(\"id\", response._id);\r",
+							"\r",
+							"console.log(JSON.parse(responseBody)._id)\r",
+							"\r",
+							"pm.test(\"Body matches string\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"Cadastro realizado com sucesso\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.environment.set(\"nome\", pm.variables.replaceIn(\"{{$randomFullName}}\"));\r",
+							"pm.environment.set(\"email\", pm.variables.replaceIn(\"{{$randomEmail}}\"));\r",
+							"pm.environment.set(\"password\", pm.variables.replaceIn(\"{{$randomPassword}}\"));\r",
+							"pm.environment.set(\"administrador\", pm.variables.replaceIn(\"{{$randomBoolean}}\"));\r",
+							"\r",
 							""
 						],
 						"type": "text/javascript"
@@ -91,7 +124,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"nome\": \"{{$randomFullName}}\",\r\n    \"email\": \"{{$randomEmail}}\",\r\n    \"password\": \"{{$randomPassword}}\",\r\n    \"administrador\": \"{{$randomBoolean}}\"\r\n}",
+					"raw": "{\r\n    \"nome\": \"{{nome}}\",\r\n    \"email\": \"{{email}}\",\r\n    \"password\": \"{{password}}\",\r\n    \"administrador\": \"{{administrador}}\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
